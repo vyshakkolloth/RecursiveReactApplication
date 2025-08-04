@@ -14,7 +14,7 @@ app.use(morgan('dev'));
 app.use(express.json());
 
 app.use(cors({
-  origin: 'https://recursive-react-application.vercel.app/',
+  origin: '*', 
   credentials: true
 }));
 // Routes
