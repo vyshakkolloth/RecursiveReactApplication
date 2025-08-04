@@ -30,6 +30,7 @@ export default function Home() {
   }
 
   const fetchTreeData = async () => {
+    console.log(process.env.DB_HOST);
     setLoading(true)
     try {
       
