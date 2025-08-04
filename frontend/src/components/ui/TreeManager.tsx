@@ -21,6 +21,7 @@ interface TreeManagerProps {
   onEditNode?: (nodeId: string) => void
   onDeleteNode?: (nodeId: string) => void
   className?: string
+  handleToggle:(nodeId: string) => void
 }
 
 interface TreeItemProps {
@@ -145,27 +146,24 @@ const TreeItem: React.FC<TreeItemProps> = ({
   )
 }
 
-const TreeManager = React.forwardRef<
-  HTMLDivElement,
-  TreeManagerProps
->(({ data, onAddNode, onEditNode, onDeleteNode, className }, ref) => {
+const TreeManager: React.FC<TreeManagerProps>  = (({ data, onAddNode, onEditNode, onDeleteNode, className,handleToggle } ) => {
   const [treeData, setTreeData] = React.useState<TreeNode[]>(data)
 
-  const handleToggle = (nodeId: string) => {
-    const toggleNode = (nodes: TreeNode[]): TreeNode[] => {
-      return nodes.map(node => {
-        if (node.id === nodeId) {
-          return { ...node, isExpanded: !node.isExpanded }
-        }
-        if (node.children) {
-          return { ...node, children: toggleNode(node.children) }
-        }
-        return node
-      })
-    }
+  // const handleToggle = (nodeId: string) => {
+  //   const toggleNode = (nodes: TreeNode[]): TreeNode[] => {
+  //     return nodes.map(node => {
+  //       if (node.id === nodeId) {
+  //         return { ...node, isExpanded: !node.isExpanded }
+  //       }
+  //       if (node.children) {
+  //         return { ...node, children: toggleNode(node.children) }
+  //       }
+  //       return node
+  //     })
+  //   }
     
-    setTreeData(toggleNode(treeData))
-  }
+  //   setTreeData(toggleNode(treeData))
+  // }
 
   const handleAddRoot = () => {
     onAddNode?.()
@@ -177,7 +175,7 @@ const TreeManager = React.forwardRef<
 
   return (
     <Card 
-      ref={ref}
+      // ref={ref}
       className={cn(
         "w-full max-w-4xl mx-auto",
         className
@@ -217,6 +215,6 @@ const TreeManager = React.forwardRef<
   )
 })
 
-TreeManager.displayName = "TreeManager"
+// TreeManager.displayName = "TreeManager"
 
 export { TreeManager, type TreeNode }
